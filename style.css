@@ -1,0 +1,61 @@
+div {
+    border: 1px solid black;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+.calc-container {
+    width: 300px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.result {
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#display {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 60%;
+    width: 90%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: no-wrap;
+    height: 100%;
+}
+
+.first-row, .second-row, .third-row, .fourth-row, .fifth-row {
+    display: flex;
+    height: 100%;
+}
+
+button {
+    outline: none;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+#zero {
+    width: 50%;
+}
+
+#decimal {
+    width: 25%;
+}
+
+#return {
+    width: 25%;
+}

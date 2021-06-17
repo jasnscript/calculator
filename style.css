@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+
 div {
-    border: 1px solid black;
+    border: 0px solid black;
 }
 
 main {
@@ -12,6 +14,9 @@ main {
     height: 450px;
     display: flex;
     flex-direction: column;
+
+    background-color: rgba(44, 44, 44, 0.884);
+    border-radius: 10px;
 }
 
 .result {
@@ -20,21 +25,27 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin:0 2px 0 2px;
 }
 
 #track {
     display: flex;
     justify-content: flex-end;
     width: 90%;
-    height: 20%;
+    height: 30%;
+    border: 1px solid black;
 }
 
 #display {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 40%;
-    width: 90%;
+    height: 50%;
+    width: 100%;
+    border: 1px solid black;
+    font-size: 300%;
+    color: #fff;
+    font-family: 'Questrial', sans-serif;
 }
 
 .buttons {
@@ -47,23 +58,63 @@ main {
 .first-row, .second-row, .third-row, .fourth-row, .fifth-row {
     display: flex;
     height: 100%;
+    margin: 1px 0 1px 0;
+}
+
+.fifth-row {
+    margin-bottom: 1px;
 }
 
 button {
     outline: none;
     height: 100%;
-    width: 100%;
-    border-radius: 10px;
+    width: 25%;
+    margin: 0 1px 0 1px;
+    border-radius: 1px;
+    background-color: rgb(133, 132, 132);
+    border: 0;
+    padding: 0;
+    font-size: 150%;
+    color: #fff;
+    font-family: 'Questrial', sans-serif;
+}
+
+
+#zero, #decimal, #return {
+    margin: 0 1px 0 1px;
 }
 
 #zero {
-    width: 50%;
+    width: 148px;
+    padding: 0 30px 0 30px;
+    border-bottom-left-radius: 10px;
 }
 
 #decimal {
-    width: 25%;
+    width: 73px;
+}
+
+.number {
+    background-color: rgb(133, 132, 132);
+}
+
+.operator, #return {
+    background-color: rgb(48, 199, 219);
 }
 
 #return {
-    width: 25%;
+    width: 73px;
+    border-bottom-right-radius: 10px;
+}
+
+.number:hover, #sign:hover, #clearAll:hover, #clear:hover, #decimal:hover {
+    background-color: rgb(165, 165, 165);
+}
+
+.operator:hover, #return:hover {
+    background-color: rgb(35, 220, 245);
+}
+
+button:active {
+    transform: scale(0.95);
 }

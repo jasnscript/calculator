@@ -25,22 +25,8 @@ numberButtons.forEach(button => button.addEventListener('click', function() {
 
 operatorButtons.forEach(button => button.addEventListener('click', function() {
     memory.enterPressed = false;
+    operateButton(button.id);
     
-    if (!memory.inputString[0] === false && !memory.inputString[1] === true) { // checks if first input is not empty. Prevents operator from being set if nothing has been input yet
-        setOperator(button.id)
-        setOperatorActive();
-        resetDecimalCount();
-    }
-    if (!memory.inputString[0] === false && !memory.inputString[1] === false) { // allow for operations to be chained one after another without having to press equals button
-        setOperatorActive();
-        operate();
-    }
-    if (memory.result != null) { // checks if result key is not null. Allows for operator to be set again to operate on result of last operation
-        setOperatorActive();
-        setOperator(button.id);
-        memory.inputString[0] = memory.result.toString();
-        memory.inputString[1] = '';
-    }
     console.log(memory.inputString)
     console.log(memory.operator)
 }));
@@ -68,6 +54,10 @@ pointButton.addEventListener('click', function() {
 });
 
 equalsButton.addEventListener('click', function() {
+    enter();
+});
+
+function enter() {
     if (!memory.inputString[0] === false && !memory.inputString[1] === false) {
         operate();
         memory.enterPressed = true;
@@ -76,7 +66,7 @@ equalsButton.addEventListener('click', function() {
         console.log(memory.result);
         console.log(memory.inputString)
     }
-});
+}
 
 // store value of input by concatenating value of number button
 function storeInputString(char) {
@@ -193,6 +183,24 @@ function clearDisplay() {
     }
 }
 
+function operateButton(operator) {
+    if (!memory.inputString[0] === false && !memory.inputString[1] === true) { // checks if first input is not empty. Prevents operator from being set if nothing has been input yet
+        setOperator(operator)
+        setOperatorActive();
+        resetDecimalCount();
+    }
+    if (!memory.inputString[0] === false && !memory.inputString[1] === false) { // allow for operations to be chained one after another without having to press equals button
+        setOperatorActive();
+        operate();
+    }
+    if (memory.result != null) { // checks if result key is not null. Allows for operator to be set again to operate on result of last operation
+        setOperatorActive();
+        setOperator(operator);
+        memory.inputString[0] = memory.result.toString();
+        memory.inputString[1] = '';
+    }
+}
+
 function setOperator(operator) {
     memory.operator = operator;
 }
@@ -233,10 +241,12 @@ function operate() {
 }
 
 function roundDecimal() {
-    memory.result = Math.round(memory.result * 1000000) / 1000000
+    memory.result = Math.round(memory.result * 10000) / 10000
 }
 
-
+document.onkeydown = function(e) {
+    e.preventDefault();
+}
 // key press
 document.onkeyup = function(e) {
     if (e.key === '0' || e.key === '1' || e.key === '2' || e.key === '3' ||
@@ -247,29 +257,19 @@ document.onkeyup = function(e) {
         if (memory.decimalCount < 1) {
             storeInputString(e.key);
         }
+    } else if (e.key === 'Enter') {
+        enter();
+    } else if (e.key === '+') {
+        console.log(e.key)
+        operateButton('+');
+    } else if (e.key === '-') {
+        console.log(e.key)
+        operateButton('-');
+    } else if (e.key === '*') {
+        console.log(e.key)
+        operateButton('*');
+    } else if (e.key === '/') {
+        console.log(e.key)
+        operateButton('/');
     }
-    
-    // switch (e.key) {
-    //     case '0':
-    //         storeInputString(e.key);
-    //         break;
-    //     case '1':
-    //         storeInputString(e.key);
-    //         break;
-    //     case '2':
-    //         storeInputString(e.key);
-    //         break;
-    //     case '3':
-    //         storeInputString(e.key);
-    //         break;
-    // }
-    // if (e.key == '0') {
-    //     storeInputString(e.key);
-    // } else if (e.key == 'r') {
-    //     changeColorRainbow();
-    // } else if (e.key == 'g') {
-    //     changeColorGray();
-    // } else if (e.key == 'c') {
-    //     clearGrid();
-    // }
 }

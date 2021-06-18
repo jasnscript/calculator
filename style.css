@@ -1,17 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
 
 :root {
-    --bottom-border-radius: 10px;
+    --radius: 10px;
     --operator-blue: rgb(48, 199, 219);
-}
-
-div {
-    border: 0px solid black;
+    --display-padding-right: 5px;
 }
 
 main {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    min-height: 500px;
+}
+
+.header {
+    height: calc(100% - 560px);
+    min-height: 50px;
+    max-height: 180px;
 }
 
 .calc-container {
@@ -19,8 +25,6 @@ main {
     height: 450px;
     display: flex;
     flex-direction: column;
-
-    /*background-color: rgba(44, 44, 44, 0.884);*/
     border-radius: 10px;
     padding: 5px;
 }
@@ -39,20 +43,31 @@ main {
     display: flex;
     justify-content: flex-end;
     width: 90%;
-    height: 30%;
+    height: 10%;
 }
 
 #display {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    height: 50%;
+    height: 70%;
     width: 100%;
     font-size: 300%;
     color: rgba(37, 37, 37, 0.781);
-
+    padding-top: 10px;
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+    background-color: rgb(236, 236, 236);
     font-family: 'Questrial', sans-serif;
     font-weight: bold;
+}
+
+.displayContent {
+    padding-right: var(--display-padding-right);
+}
+
+.initial0 {
+    padding-right: var(--display-padding-right);
 }
 
 .buttons {
@@ -94,33 +109,29 @@ button {
 #zero {
     width: 148px;
     padding: 0 30px 0 30px;
-    border-bottom-left-radius: var(--bottom-border-radius);
+    border-bottom-left-radius: var(--radius);
 }
 
 #decimal {
     width: 73px;
 }
 
-/* .number {
-    background-color: rgb(94, 94, 94);
-} */
-
 .operator, #return {
-    background-color: rgb(48, 199, 219);
+    background-color: var(--operator-blue);
 
 }
 
 #return {
     width: 73px;
-    border-bottom-right-radius: var(--bottom-border-radius);
+    border-bottom-right-radius: var(--radius);
 }
 
 .number:hover, #sign:hover, #clearAll:hover, #clear:hover, #decimal:hover {
-    background-color: rgb(165, 165, 165);
+    opacity: 0.7;
 }
 
 .operator:hover, #return:hover {
-    background-color: rgb(35, 220, 245);
+    opacity: 0.7 !important;
 }
 
 button:active {

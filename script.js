@@ -7,6 +7,8 @@ let memory = {
     enterPressed: false,
 };
 
+let maxDigits = 9; // digits
+
 // set up query selectors
 const numberButtons = document.querySelectorAll('.number');
 const operatorButtons = document.querySelectorAll('.operator');
@@ -35,19 +37,19 @@ function highlightOperator(operator) {
     switch (operator) {
         case '+':
             const plus = document.querySelector('.add');
-            plus.style.backgroundColor = 'rgb(253, 188, 114)';
+            plus.setAttribute('style', 'background-color: rgb(253, 188, 114)');
             break;
         case '-':
             const minus = document.querySelector('.subtract');
-            minus.style.backgroundColor = 'rgb(253, 188, 114)';
+            minus.setAttribute('style', 'background-color: rgb(253, 188, 114)');
             break;
         case '*':
             const times = document.querySelector('.multiply');
-            times.style.backgroundColor = 'rgb(253, 188, 114)';
+            times.setAttribute('style', 'background-color: rgb(253, 188, 114)');
             break;
         case '/':
             const divide = document.querySelector('.divide');
-            divide.style.backgroundColor = 'rgb(253, 188, 114)';
+            divide.setAttribute('style', 'background-color: rgb(253, 188, 114)');
             break;
     }
 
@@ -104,12 +106,17 @@ function storeInputString(char) {
         clearAll();
     }
     if (memory.operatorActive === false) {
-        if (memory.inputString[0].length < 10) {
-            memory.inputString[0] += char;
-            updateDisplay(memory.inputString[0]);
+        if (memory.inputString[0].length < maxDigits) {
+            if (char === '.' && memory.inputString[0].length === 0) {
+                memory.inputString[0] += '0' + char;
+                updateDisplay(memory.inputString[0]);
+            } else {
+                memory.inputString[0] += char;
+                updateDisplay(memory.inputString[0]);
+            }
         }
     } else {
-        if (memory.inputString[1].length < 10) {
+        if (memory.inputString[1].length < maxDigits) {
             memory.inputString[1] += char;
             updateDisplay(memory.inputString[1])
         }
@@ -130,6 +137,7 @@ function clearAll() {
     };
     clearDisplay();
     deHighlightOperator();
+    initializeDisplay();
 }
 
 function clear() {
@@ -147,8 +155,15 @@ function clear() {
             memory.inputString[1] = memory.inputString[1].slice(0, -1);
             updateDisplay(memory.inputString[1]);
         }
+    }  else if (memory.result != null && memory.operatorActive === true) {
+        if (memory.inputString[1].slice(memory.inputString[1].length - 1) === '.') {
+            resetDecimalCount();
+        }
+        memory.inputString[1] = memory.inputString[1].slice(0, -1);
+        updateDisplay(memory.inputString[1]);
+    } else {
+        clearAll();
     }
-    
 }
 
 function addNegativeSignInputString0() {
@@ -216,6 +231,13 @@ function clearDisplay() {
     while (displayContainer.firstChild) {
         displayContainer.removeChild(displayContainer.firstChild);
     }
+}
+
+function initializeDisplay() {
+    const initial = document.createElement('div');
+    initial.classList.add('initial0');
+    initial.textContent = '0';
+    displayContainer.appendChild(initial);
 }
 
 function operateButton(operator) {
@@ -287,7 +309,7 @@ document.onkeydown = function(e) {
     e.preventDefault();
 }
 // key press
-document.onkeyup = function(e) {
+document.onkeydown = function(e) {
     if (e.key === '0' || e.key === '1' || e.key === '2' || e.key === '3' ||
     e.key === '4' || e.key === '5' || e.key === '6' || e.key === '7' || e.key === '8' ||
     e.key === '9') {
@@ -312,5 +334,6 @@ document.onkeyup = function(e) {
         operateButton('/');
     }
 }
+
 
 

@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
 
+:root {
+    --bottom-border-radius: 10px;
+    --operator-blue: rgb(48, 199, 219);
+}
+
 div {
     border: 0px solid black;
 }
@@ -15,17 +20,19 @@ main {
     display: flex;
     flex-direction: column;
 
-    background-color: rgba(44, 44, 44, 0.884);
+    /*background-color: rgba(44, 44, 44, 0.884);*/
     border-radius: 10px;
+    padding: 5px;
 }
 
 .result {
     height: 30%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    margin:0 2px 0 2px;
+    margin: 0 1px 1px 1px;
+    border-bottom: 0px solid var(--operator-blue);
 }
 
 #track {
@@ -33,7 +40,6 @@ main {
     justify-content: flex-end;
     width: 90%;
     height: 30%;
-    border: 1px solid black;
 }
 
 #display {
@@ -42,10 +48,11 @@ main {
     align-items: flex-end;
     height: 50%;
     width: 100%;
-    border: 1px solid black;
     font-size: 300%;
-    color: #fff;
+    color: rgba(37, 37, 37, 0.781);
+
     font-family: 'Questrial', sans-serif;
+    font-weight: bold;
 }
 
 .buttons {
@@ -71,7 +78,7 @@ button {
     width: 25%;
     margin: 0 1px 0 1px;
     border-radius: 1px;
-    background-color: rgb(133, 132, 132);
+    background-color: rgb(122, 122, 122);
     border: 0;
     padding: 0;
     font-size: 150%;
@@ -87,24 +94,25 @@ button {
 #zero {
     width: 148px;
     padding: 0 30px 0 30px;
-    border-bottom-left-radius: 10px;
+    border-bottom-left-radius: var(--bottom-border-radius);
 }
 
 #decimal {
     width: 73px;
 }
 
-.number {
-    background-color: rgb(133, 132, 132);
-}
+/* .number {
+    background-color: rgb(94, 94, 94);
+} */
 
 .operator, #return {
     background-color: rgb(48, 199, 219);
+
 }
 
 #return {
     width: 73px;
-    border-bottom-right-radius: 10px;
+    border-bottom-right-radius: var(--bottom-border-radius);
 }
 
 .number:hover, #sign:hover, #clearAll:hover, #clear:hover, #decimal:hover {

@@ -26,10 +26,39 @@ numberButtons.forEach(button => button.addEventListener('click', function() {
 operatorButtons.forEach(button => button.addEventListener('click', function() {
     memory.enterPressed = false;
     operateButton(button.id);
-    
     console.log(memory.inputString)
     console.log(memory.operator)
 }));
+
+function highlightOperator(operator) {
+    deHighlightOperator();
+    switch (operator) {
+        case '+':
+            const plus = document.querySelector('.add');
+            plus.style.backgroundColor = 'rgb(253, 188, 114)';
+            break;
+        case '-':
+            const minus = document.querySelector('.subtract');
+            minus.style.backgroundColor = 'rgb(253, 188, 114)';
+            break;
+        case '*':
+            const times = document.querySelector('.multiply');
+            times.style.backgroundColor = 'rgb(253, 188, 114)';
+            break;
+        case '/':
+            const divide = document.querySelector('.divide');
+            divide.style.backgroundColor = 'rgb(253, 188, 114)';
+            break;
+    }
+
+}
+
+function deHighlightOperator() {
+    const operator = document.querySelectorAll('.operator');
+    operator.forEach(button => {
+        button.style.backgroundColor = 'rgb(48, 199, 219)';
+    })
+}
 
 signButton.addEventListener('click', function() {
     changeSign();
@@ -63,6 +92,7 @@ function enter() {
         memory.enterPressed = true;
         resetDecimalCount();
         setOperatorInactive();
+        deHighlightOperator();
         console.log(memory.result);
         console.log(memory.inputString)
     }
@@ -74,11 +104,15 @@ function storeInputString(char) {
         clearAll();
     }
     if (memory.operatorActive === false) {
-        memory.inputString[0] += char;
-        updateDisplay(memory.inputString[0]);
+        if (memory.inputString[0].length < 10) {
+            memory.inputString[0] += char;
+            updateDisplay(memory.inputString[0]);
+        }
     } else {
-        memory.inputString[1] += char;
-        updateDisplay(memory.inputString[1])
+        if (memory.inputString[1].length < 10) {
+            memory.inputString[1] += char;
+            updateDisplay(memory.inputString[1])
+        }
     }
     if (char === '.') {
         memory.decimalCount++;
@@ -95,6 +129,7 @@ function clearAll() {
         enterPressed: false,
     };
     clearDisplay();
+    deHighlightOperator();
 }
 
 function clear() {
@@ -139,7 +174,7 @@ function changeSign() {
             updateDisplay(memory.inputString[0]);
         } else {
             memory.inputString[0] = memory.inputString[0].slice(1);
-            updateDisplay(memory.inputString[1]);
+            updateDisplay(memory.inputString[0]);
         }
     } else if (memory.operatorActive === true && !memory.inputString[1] === false) {
         if (memory.inputString[1][0] != '-') { 
@@ -184,18 +219,22 @@ function clearDisplay() {
 }
 
 function operateButton(operator) {
+    
     if (!memory.inputString[0] === false && !memory.inputString[1] === true) { // checks if first input is not empty. Prevents operator from being set if nothing has been input yet
         setOperator(operator)
         setOperatorActive();
+        highlightOperator(operator);
         resetDecimalCount();
     }
     if (!memory.inputString[0] === false && !memory.inputString[1] === false) { // allow for operations to be chained one after another without having to press equals button
         setOperatorActive();
+        highlightOperator(operator);
         operate();
     }
     if (memory.result != null) { // checks if result key is not null. Allows for operator to be set again to operate on result of last operation
         setOperatorActive();
         setOperator(operator);
+        highlightOperator(operator);
         memory.inputString[0] = memory.result.toString();
         memory.inputString[1] = '';
     }
@@ -233,7 +272,7 @@ function operate() {
             break;
     }
     roundDecimal();
-    if (memory.result >= 1000000000000 || memory.result <= -1000000000000) {
+    if (memory.result >= 1000000 || memory.result <= -1000000) {
         updateDisplay(memory.result.toExponential(4));
     } else {
         updateDisplay(memory.result);
@@ -241,7 +280,7 @@ function operate() {
 }
 
 function roundDecimal() {
-    memory.result = Math.round(memory.result * 10000) / 10000
+    memory.result = Math.round(memory.result * 1000) / 1000
 }
 
 document.onkeydown = function(e) {
@@ -273,3 +312,5 @@ document.onkeyup = function(e) {
         operateButton('/');
     }
 }
+
+

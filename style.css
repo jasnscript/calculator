@@ -33,7 +33,7 @@ footer {
 .header {
     height: calc(100% - 560px);
     min-height: 50px;
-    max-height: 180px;
+    max-height: 100px;
 }
 
 .calc-container {
